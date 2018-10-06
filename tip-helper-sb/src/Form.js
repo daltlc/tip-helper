@@ -12,14 +12,28 @@ class Form extends Component {
       arrayOfNumbers: '',
     };
 
-    // this.handleChange = this.handleChange.bind(this);
-  }
+    let memberFunctions = Object.getOwnPropertyNames(NoteForm.prototype);
+    for(let functionName of memberFunctions) {
+      if(functionName.startsWith('handle')) {
+        this[functionName] = this[functionName].bind(this);  }
 
-  // handleChange(event) {
-  //   let {name, value} = event.target;
-
-  //   this.setState({ [name]: value });
-  // }
+        handleSubmit(event) {
+          event.preventDefault();
+      
+          this.props.handleComplete(this.state);
+          this.setState({
+            dollarPerHour: '',
+            arrayOfNumbers: '',
+          });
+        }
+      
+        handleChange(event) {
+          let {name, value, type} = event.target;
+      
+          this.setState({
+            [name]: value,
+          });
+        }
 
     render() {
       return (
